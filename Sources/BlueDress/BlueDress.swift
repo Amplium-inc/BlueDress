@@ -17,26 +17,26 @@ public class YCbCrImageBufferConverter {
         pipelineState = try device.makeRenderPipelineState(metalLib: metalLib)
     }
     
-    public func convertToBGRA(imageBuffer: CVPixelBuffer) throws -> CVPixelBuffer {
+    public func convertToBGRA(imageBuffer: CVPixelBuffer, yTexture: MTLTexture, cbcrTexture: MTLTexture) throws -> CVPixelBuffer {
         guard imageBuffer.isYpCbCr else { fatalError() }
         guard imageBuffer.planeCount == 2 else { fatalError() }
         
         try imageBuffer.lock()
         defer { _ = try? imageBuffer.unlock() }
         
-        let yTexture = try CVMetalTexture.make(
-            sourceImage: imageBuffer,
-            planeIndex: PlaneIndex.y.rawValue,
-            pixelFormat: .r8Unorm,
-            textureCache: textureCache
-        ).metalTexture!
+        // let yTexture = try CVMetalTexture.make(
+        //     sourceImage: imageBuffer,
+        //     planeIndex: PlaneIndex.y.rawValue,
+        //     pixelFormat: .r8Unorm,
+        //     textureCache: textureCache
+        // ).metalTexture!
         
-        let cbcrTexture = try CVMetalTexture.make(
-            sourceImage: imageBuffer,
-            planeIndex: PlaneIndex.cbcr.rawValue,
-            pixelFormat: .rg8Unorm,
-            textureCache: textureCache
-        ).metalTexture!
+        // let cbcrTexture = try CVMetalTexture.make(
+        //     sourceImage: imageBuffer,
+        //     planeIndex: PlaneIndex.cbcr.rawValue,
+        //     pixelFormat: .rg8Unorm,
+        //     textureCache: textureCache
+        // ).metalTexture!
         
         if outputPixelBuffer == nil {
             /// ここでリサイズかけられる
