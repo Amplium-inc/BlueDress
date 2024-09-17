@@ -24,20 +24,6 @@ public class YCbCrImageBufferConverter {
         try imageBuffer.lock()
         defer { _ = try? imageBuffer.unlock() }
         
-        // let yTexture = try CVMetalTexture.make(
-        //     sourceImage: imageBuffer,
-        //     planeIndex: PlaneIndex.y.rawValue,
-        //     pixelFormat: .r8Unorm,
-        //     textureCache: textureCache
-        // ).metalTexture!
-        
-        // let cbcrTexture = try CVMetalTexture.make(
-        //     sourceImage: imageBuffer,
-        //     planeIndex: PlaneIndex.cbcr.rawValue,
-        //     pixelFormat: .rg8Unorm,
-        //     textureCache: textureCache
-        // ).metalTexture!
-        
         if outputPixelBuffer == nil {
             /// ここでリサイズかけられる
             outputPixelBuffer = try CVPixelBuffer.make(width: yTexture.width, height: yTexture.height)

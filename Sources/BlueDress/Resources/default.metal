@@ -34,6 +34,10 @@ fragment float4 fragmentShader(ImageColorInOut in [[ stage_in ]],
     float4 ycbcr = float4(capturedImageTextureY.sample(colorSampler, in.texCoord).r,
                           capturedImageTextureCbCr.sample(colorSampler, in.texCoord).rg,
                           1.0);
+
+    ycbcr.r = (ycbcr.r - (16.0f/255.0f)) * (255.0f/(235.0f-16.0f));
+    ycbcr.g = (ycbcr.g - (16.0f/255.0f)) * (255.0f/(240.0f-16.0f));
+    ycbcr.b = (ycbcr.b - (16.0f/255.0f)) * (255.0f/(240.0f-16.0f));
     
     // Return converted RGB color
     return ycbcrToRGBTransform * ycbcr;
